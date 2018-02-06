@@ -7,9 +7,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.example.kristoffer.diceroller.Model.DiceRoller;
 import com.example.kristoffer.diceroller.Model.IDiceRoller;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,10 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnRoll = findViewById(R.id.btnRollDice);
         btnClear = findViewById(R.id.btnClear);
-
         imgDice1 = findViewById(R.id.imgDice1);
         imgDice2 = findViewById(R.id.imgDice2);
-
         listHistory = findViewById(R.id.listHistory);
 
         m_dd = new DiceRoller();
@@ -55,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     private void clickRoll() {
@@ -73,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(numRolls>16)
         {
-            listHistory.removeAllViews();
-            numRolls = 0;
+            clickClear();
             clickRoll();
         }
     }
@@ -82,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
     private void clickClear() {
         numRolls = 0;
         listHistory.removeAllViews();
+
+        imgDice1.setImageResource(R.drawable.d6);
+        imgDice2.setImageResource(R.drawable.d6);
     }
 
     private void setDice(int number, ImageView imageView) {
@@ -108,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 break;
         }
-
     }
 }
 

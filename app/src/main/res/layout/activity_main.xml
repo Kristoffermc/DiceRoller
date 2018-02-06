@@ -44,12 +44,21 @@
         android:id="@+id/listHistory"
         android:layout_width="match_parent"
         android:layout_height="302dp"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical">
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnClear"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="CLEAR" />
 
 </LinearLayout>
+    <!--
+   <pl.droidsonroids.gif.GifImageView
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:src="@drawable/dgif"
+   android:background="@android:color/transparent"
+       />
+       -->
