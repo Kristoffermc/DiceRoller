@@ -1,5 +1,6 @@
 package com.example.kristoffer.diceroller;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.kristoffer.diceroller.Model.DiceRoller;
 import com.example.kristoffer.diceroller.Model.IDiceRoller;
+
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
     IDiceRoller m_dd;
 
     int numRolls = 0;
+    Random rand = new Random();
+    Random ramd = new Random();
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clickRoll() {
+        diceAnimation();
+        /*
         numRolls++;
 
         int roll1 = m_dd.RollDice();
@@ -75,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         {
             clickClear();
             clickRoll();
-        }
+        }*/
     }
 
     private void clickClear() {
@@ -111,5 +121,26 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    private void diceAnimation() {
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                int  n = rand.nextInt(6) + 1;
+                int  m = ramd.nextInt(6) + 1;
+
+                setDice(n, imgDice1);
+                setDice(m, imgDice2);
+
+                handler.postDelayed(this, 100L);  // 1 second delay
+            }
+        };
+        runnable.run();
+
+    }
 }
+
+
+
 
