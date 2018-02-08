@@ -1,6 +1,8 @@
 package com.example.kristoffer.diceroller;
 
+import android.content.Context;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.kristoffer.diceroller.Model.DiceRoller;
 import com.example.kristoffer.diceroller.Model.IDiceRoller;
-
+import com.example.kristoffer.diceroller.Model.Result;
 import java.util.Random;
 
 
@@ -27,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
     IDiceRoller m_dd;
 
     int numRolls = 0;
-    Random rand = new Random();
-    Random ramd = new Random();
-
 
 
 
@@ -61,33 +60,62 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     private void clickRoll() {
-        diceAnimation();
-        /*
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            int count = 0;
+            // Animation
+            @Override
+            public void run() {
+                int rollA = m_dd.RollDice();
+                int rollB = m_dd.RollDice();
+
+                setDice(rollA, imgDice1);
+                setDice(rollB, imgDice2);
+                count++;
+                if (count == 5) // 5 iterations of 0.1 second per iteration
+                {
+                    roll(rollA,rollB);
+                    return;
+                }
+                handler.postDelayed(this, 100L);  // 0.1 second delay
+            }
+        };
+        runnable.run();
+    }
+
+    private void roll(int one, int two) {
         numRolls++;
 
-        int roll1 = m_dd.RollDice();
-        int roll2 = m_dd.RollDice();
+        Result result = new Result();
+        result.setResult1(one);
+        result.setResult2(two);
+
+        // Calculates the rolls
+        int roll1 = result.getResult1();
+        int roll2 = result.getResult2();
         int sum = roll1+roll2;
 
-        setDice(roll1, imgDice1);
-        setDice(roll2, imgDice2);
-
+        // Adds a TextView to the LinearLayout of our history
         TextView tView = new TextView(this);
         tView.setText("Roll " + numRolls + ": " + roll1 + " + " + roll2 + " Sum: " + sum);
         listHistory.addView(tView);
 
+        // Clears the history if it exceeds the screen (For my phone - Will be refactored later to fit all screens)
         if(numRolls>16)
         {
             clickClear();
             clickRoll();
-        }*/
+        }
+
+        // Vibrates the device
+        Vibrator vibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrate.vibrate(500);
     }
 
+    // Clears the history
     private void clickClear() {
         numRolls = 0;
         listHistory.removeAllViews();
@@ -122,23 +150,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void diceAnimation() {
-        final Handler handler = new Handler();
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                int  n = rand.nextInt(6) + 1;
-                int  m = ramd.nextInt(6) + 1;
-
-                setDice(n, imgDice1);
-                setDice(m, imgDice2);
-
-                handler.postDelayed(this, 100L);  // 1 second delay
-            }
-        };
-        runnable.run();
-
-    }
 }
 
 
