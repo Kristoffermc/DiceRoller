@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.example.kristoffer.diceroller.Model.DiceRoller;
 import com.example.kristoffer.diceroller.Model.IDiceRoller;
 import com.example.kristoffer.diceroller.Model.Result;
-import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
