@@ -107,14 +107,14 @@ public class MainActivity extends AppCompatActivity {
         TextView tView = new TextView(this);
         tView.setText("Roll " + numRolls + ": " + roll1 + " + " + roll2 + " Sum: " + sum);
         listHistory.addView(tView);
-
+/*
         // Clears the history if it exceeds the screen (For my phone - Will be refactored later to fit all screens)
         if(numRolls>16)
         {
             clickClear();
             clickRoll();
         }
-
+*/
         // Vibrates the device
         Vibrator vibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrate.vibrate(500);
