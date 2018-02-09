@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         listHistory = findViewById(R.id.listHistory);
 
         m_dd = new DiceRoller();
+        btnClear.setEnabled(false);
 
 
         btnRoll.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clickRoll() {
+        if(!btnClear.isEnabled()) {
+            btnClear.setEnabled(true);
+        }
+        btnRoll.setEnabled(false);
         final Handler handler = new Handler();
         final Runnable runnable = new Runnable() {
             int count = 0;
@@ -77,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 if (count == 5) // 5 iterations of 0.1 second per iteration
                 {
                     roll(rollA,rollB);
+                    btnRoll.setEnabled(true);
                     return;
                 }
                 handler.postDelayed(this, 100L);  // 0.1 second delay
