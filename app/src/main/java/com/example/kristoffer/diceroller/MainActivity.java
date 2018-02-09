@@ -43,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
         listHistory = findViewById(R.id.listHistory);
 
         m_dd = new DiceRoller();
-        btnClear.setEnabled(false);
 
+        if(0>=numRolls)
+            btnClear.setEnabled(false);
 
         btnRoll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     btnRoll.setEnabled(true);
                     return;
                 }
-                handler.postDelayed(this, 100L);  // 0.1 second delay
+                handler.postDelayed(this, 75L);  // 0.1 second delay
             }
         };
         runnable.run();
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 */
         // Vibrates the device
         Vibrator vibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrate.vibrate(500);
+        vibrate.vibrate(250);
     }
 
     // Clears the history
