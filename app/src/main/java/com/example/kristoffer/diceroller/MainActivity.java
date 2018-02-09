@@ -80,13 +80,11 @@ public class MainActivity extends AppCompatActivity {
                 setDice(rollA, imgDice1);
                 setDice(rollB, imgDice2);
                 count++;
-                if (count == 5) // 5 iterations of 0.1 second per iteration
                 {
                     roll(rollA,rollB);
                     btnRoll.setEnabled(true);
                     return;
                 }
-                handler.postDelayed(this, 75L);  // 0.1 second delay
             }
         };
         runnable.run();
