@@ -80,11 +80,13 @@ public class MainActivity extends AppCompatActivity {
                 setDice(rollA, imgDice1);
                 setDice(rollB, imgDice2);
                 count++;
+                if(count==5)
                 {
                     roll(rollA,rollB);
                     btnRoll.setEnabled(true);
                     return;
                 }
+                handler.postDelayed(this, 75L);
             }
         };
         runnable.run();
