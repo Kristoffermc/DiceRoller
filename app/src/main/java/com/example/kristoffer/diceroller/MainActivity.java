@@ -1,10 +1,12 @@
 package com.example.kristoffer.diceroller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,34 +20,36 @@ import com.example.kristoffer.diceroller.Model.Result;
 public class MainActivity extends AppCompatActivity {
 
     Button btnRoll;
-    Button btnClear;
-
+    Button btnHistory;
     ImageView imgDice1;
     ImageView imgDice2;
-
     LinearLayout listHistory;
-
     IDiceRoller m_dd;
 
     int numRolls = 0;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // recovering the instance state
+        if (savedInstanceState != null) {
+            // do stuff
+        }
+
+
         btnRoll = findViewById(R.id.btnRollDice);
-        btnClear = findViewById(R.id.btnClear);
+        btnHistory = findViewById(R.id.btnHistory);
         imgDice1 = findViewById(R.id.imgDice1);
         imgDice2 = findViewById(R.id.imgDice2);
         listHistory = findViewById(R.id.listHistory);
 
         m_dd = new DiceRoller();
 
-        if(0>=numRolls)
-            btnClear.setEnabled(false);
+        if (0 >= numRolls)
+            btnHistory.setEnabled(false);
+
 
         btnRoll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,18 +58,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnClear.setOnClickListener(new View.OnClickListener() {
+        btnHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickClear();
+                showHistory();
             }
         });
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        // call superclass to save any view hierarchy
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    // Change view
+    private void showHistory() {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
     }
 
     private void clickRoll() {
-        if(!btnClear.isEnabled()) {
-            btnClear.setEnabled(true);
+        if(!btnHistory.isEnabled()) {
+            btnHistory.setEnabled(true);
         }
         btnRoll.setEnabled(false);
         final Handler handler = new Handler();
@@ -80,16 +96,16 @@ public class MainActivity extends AppCompatActivity {
                 setDice(rollA, imgDice1);
                 setDice(rollB, imgDice2);
                 count++;
-                if(count==5)
+                if(count==5) // 5 roll animation
                 {
                     roll(rollA,rollB);
                     btnRoll.setEnabled(true);
-                    return;
+                    return; // Breaks the runnable
                 }
-                handler.postDelayed(this, 75L);
+                handler.postDelayed(this, 75L); // Each animation picture lasts 0.075 seconds
             }
         };
-        runnable.run();
+        runnable.run(); // Starts the runnable
     }
 
     private void roll(int one, int two) {
