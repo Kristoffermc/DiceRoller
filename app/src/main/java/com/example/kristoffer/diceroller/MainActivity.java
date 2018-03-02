@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout listHistory;
     IDiceRoller m_dd;
 
-    public ArrayList<Integer> results; // = new ArrayList<>();
+    public static ArrayList<Integer> results = new ArrayList<>();
 
 
     public int numRolls = 0;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         btnHistory = findViewById(R.id.btnHistory);
         imgDice1 = findViewById(R.id.imgDice1);
         imgDice2 = findViewById(R.id.imgDice2);
-        listHistory = findViewById(R.id.listHistory);
+        //listHistory = findViewById(R.id.listHistory);
 
         if (results == null)
             if (savedInstanceState != null)
@@ -120,9 +120,7 @@ public class MainActivity extends AppCompatActivity {
     private void roll(int one, int two) {
         numRolls++;
 
-        Result result = new Result();
-        result.setResult1(one);
-        result.setResult2(two);
+        Result result = new Result(one, two);
 
         // Calculates the rolls
         int roll1 = result.getResult1();
