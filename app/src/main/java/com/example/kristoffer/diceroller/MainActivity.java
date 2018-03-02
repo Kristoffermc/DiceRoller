@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    String tag = "XYZ";
     Button btnRoll;
     Button btnHistory;
     ImageView imgDice1;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout listHistory;
     IDiceRoller m_dd;
 
-    public List<Integer> results = new ArrayList<>();
+    public ArrayList<Integer> results; // = new ArrayList<>();
 
 
     public int numRolls = 0;
@@ -45,10 +47,22 @@ public class MainActivity extends AppCompatActivity {
         imgDice2 = findViewById(R.id.imgDice2);
         listHistory = findViewById(R.id.listHistory);
 
+        if (results == null)
+            if (savedInstanceState != null)
+            {
+                Log.d(tag, "restored from bundle");
+                results = (ArrayList<Integer>) savedInstanceState.getSerializable("results");
+            }
+            else {
+                Log.d(tag, "Created");
+                results = new ArrayList<>();
+            }
+
+        btnHistory.setEnabled(results.size() > 0);
+
         m_dd = new DiceRoller();
 
-        if (0 >= numRolls)
-            btnHistory.setEnabled(false);
+
 
         btnRoll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
     // Change view
     private void showHistory() {
         Intent intent = new Intent(this, HistoryActivity.class);
-        intent.putIntegerArrayListExtra("results", (ArrayList<Integer>) results);
+        intent.putIntegerArrayListExtra("results", results);
+        Log.d(tag, "send to history: " + results);
         startActivity(intent);
     }
 
@@ -151,28 +166,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-        /*
-        // recovering the instance state
-        if (savedInstanceState != null) {
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+       super.onSaveInstanceState(savedInstanceState);
 
+       savedInstanceState.putIntegerArrayList("results", results );
+       Log.d(tag, "onSave..." + results);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(tag, "onRestore called");
+        if (savedInstanceState != null)
+        {
+            Log.d(tag, "restored from bundle");
+            results = (ArrayList<Integer>) savedInstanceState.getSerializable("results");
+        }
+        else {
+            Log.d(tag, "Created");
+            results = new ArrayList<>();
         }
 
-
-    // invoked when the activity may be temporarily destroyed, save the instance state here
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-
-        // call superclass to save any view hierarchy
-        super.onSaveInstanceState(outState);
+        btnHistory.setEnabled(results.size() > 0);
     }
-
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-
-    }
-    */
-
 }
 
 
