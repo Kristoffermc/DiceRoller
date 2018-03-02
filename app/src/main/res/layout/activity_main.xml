@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_marginBottom="0dp"
+    android:orientation="vertical"
     tools:context="com.example.kristoffer.diceroller.MainActivity">
 
     <TextView
@@ -35,29 +35,25 @@
             app:srcCompat="@drawable/d6" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnRollDice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ROLL DICE" />
-
-    <ScrollView android:layout_weight="1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
     <LinearLayout
-        android:id="@+id/listHistory"
         android:layout_width="match_parent"
-        android:layout_height="302dp"
-        android:orientation="vertical"></LinearLayout>
-
-    </ScrollView>
-
-    <Button
-        android:id="@+id/btnHistory"
-        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:text="History" />
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
 
+
+        <Button
+            android:id="@+id/btnRollDice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ROLL DICE" />
+
+        <Button
+            android:id="@+id/btnHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="History" />
+    </LinearLayout>
 </LinearLayout>
