@@ -8,6 +8,12 @@ public class Result {
     int result1;
     int result2;
 
+    public Result(int result1, int result2)
+    {
+        this.result1 = result1;
+        this.result2 = result2;
+    }
+
     public int getResult1() {
         return result1;
     }
