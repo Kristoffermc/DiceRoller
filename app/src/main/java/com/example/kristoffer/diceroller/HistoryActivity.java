@@ -54,8 +54,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     // Change view
     private void showMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     // Clears the history
